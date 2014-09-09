@@ -1,150 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Haz tu consulta</title>
-
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" charset="utf-8">
-
-    var pictureSource;   // picture source
-    var destinationType; // sets the format of returned value
-
-    // Wait for device API libraries to load
-    //
-    document.addEventListener("deviceready",onDeviceReady,false);
-
-    // device APIs are available
-    //
-    function onDeviceReady() {
-        pictureSource=navigator.camera.PictureSourceType;
-        destinationType=navigator.camera.DestinationType;
-    }
-
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoDataSuccess(imageData) {
-      // Uncomment to view the base64-encoded image data
-      // console.log(imageData);
-
-      // Get image handle
-      //
-      var smallImage = document.getElementById('smallImage');
-
-      // Unhide image elements
-      //
-      smallImage.style.display = 'block';
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      smallImage.src = "data:image/jpeg;base64," + imageData;
-    }
-
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoURISuccess(imageURI) {
-      // Uncomment to view the image file URI
-      // console.log(imageURI);
-
-      // Get image handle
-      //
-      var largeImage = document.getElementById('largeImage');
-
-      // Unhide image elements
-      //
-      largeImage.style.display = 'block';
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      largeImage.src = imageURI;
-    }
-
-    // A button will call this function
-    //
-    function capturePhoto() {
-      // Take picture using device camera and retrieve image as base64-encoded string
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-        destinationType: destinationType.FILE_URI });
-    }
-
-    // A button will call this function
-    //
-    function capturePhotoEdit() {
-      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 20, allowEdit: true,
-        destinationType: destinationType.FILE_URI });
-    }
-
-    // A button will call this function
-    //
-    function getPhoto(source) {
-      // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-        destinationType: destinationType.FILE_URI,
-        sourceType: source });
-    }
-    
-    function uploadPhoto() {
-
-        //selected photo URI is in the src attribute (we set this on getPhoto)
-        var imageURI = document.getElementById('largeImage').getAttribute("src");
-        if (!imageURI) {
-            alert('Please select an image first.');
-            return;
-        }
-
-        //set upload options
-        var options = new FileUploadOptions();
-        options.fileKey = "file";
-        options.fileName = imageURI.substr(imageURI.lastIndexOf('/')+1);
-        options.mimeType = "image/jpeg";
-        // this will get value of text field
-        options.params = {
-            titulo: document.getElementById("titulo").value,
-            pregunta: document.getElementById("pregunta").value
-        }
-
-        var ft = new FileTransfer();
-        ft.upload(imageURI, encodeURI("http://ttg1.pronosticodeltiempo.info/test/mobile.php?check=2"), win, fail, options);
-        alert('Gracias por tu pregunta intentaremos responderte lo antes posible');
-    }
-
-    // Called if something bad happens.
-    //
-    function onFail(message) {
-      alert('Failed because: ' + message);
-    }
-    
-    function win(r) {
-            console.log("Code = " + r.responseCode);
-            console.log("Response = " + r.response);
-            console.log("Sent = " + r.bytesSent);
-        }
-
-    function fail(error) {
-        alert("An error has occurred: Code = " + error.code);
-        console.log("upload error source " + error.source);
-        console.log("upload error target " + error.target);
-    }
-
-    </script>
-  </head>
-  <body>
-      <br/><br/>
-    <button onclick="capturePhoto();">Saca una foto</button> <br>
-    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">O usa una que ya tenías</button><br>
-    <img style="display:none;" id="largeImage" src="" />
-    <input type="text" id="titulo" placeholder='Ejemplo de titular: "Necesito ayuda para cocina" o "Nuestro patio"' name="firstname"><br>
-    <textarea placeholder="Escribe aquí tu consulta" id="pregunta"></textarea><br>
-    <input type="button" id="btnSubmit" value="Preguntar" onclick="uploadPhoto();">
-    
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-  </body>
+    <head>
+        <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <title>Haz tu consulta</title>
+                    
+                    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+                    <!-- Bootstrap -->
+                    <link href="css/bootstrap.min.css" rel="stylesheet">
+                        <script type="text/javascript" charset="utf-8">
+                            
+                            var pictureSource;   // picture source
+                            var destinationType; // sets the format of returned value
+                            
+                            function setUpDB() {
+                                console.log("Empieza la fiesta");
+                                var db = window.openDatabase("Database", "1.0", "ED_db", 200000);
+                                db.transaction(populateDB, errorCB, successCB);
+                            }
+                        
+                        function populateDB(tx) {
+                            tx.executeSql('DROP TABLE IF EXISTS DEMO');
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS conversacion (id unique, parent_id, data, src)');
+                            tx.executeSql('INSERT INTO conversacion (id, parent_id, data, src) VALUES (1,"", "Cuanto costaria un cuadro como este, donde lo puede comprar", "111")');
+                            tx.executeSql('INSERT INTO conversacion (id, parent_id, data, src) VALUES (2,"", "Se puede ñintar una sabana con spray", "222")');
+                            tx.executeSql('INSERT INTO conversacion (id, parent_id, data, src) VALUES (3,1, "200 leuros", "")');
+                        }
+                        
+                        // Query the database
+                        //
+                        function queryDB(tx) {
+                            tx.executeSql('SELECT * FROM conversacion', [], querySuccess, errorCB);
+                        }
+                        
+                        // Query the success callback
+                        //
+                        function querySuccess(tx, results) {
+                            var len = results.rows.length;
+                            alert("Datos en conversacion: " + len + " registros encontrados.");
+                            for (var i=0; i<len; i++){
+                                alert("Registro = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
+                            }
+                        }
+                        
+                        // Transaction error callback
+                        //
+                        function errorCB(err) {
+                            alert("Error processing SQL: "+err.message);
+                        }
+                        
+                        // Transaction success callback
+                        //
+                        function successCB() {
+                            var db = window.openDatabase("Database", "1.0", "ED_db", 200000);
+                            db.transaction(queryDB, errorCB);
+                        }
+                        
+                        
+                        // Called when a photo is successfully retrieved
+                        //
+                        function onPhotoDataSuccess(imageData) {
+                            // Uncomment to view the base64-encoded image data
+                            // console.log(imageData);
+                            
+                            // Get image handle
+                            //
+                            var smallImage = document.getElementById('smallImage');
+                            
+                            // Unhide image elements
+                            //
+                            smallImage.style.display = 'block';
+                            
+                            // Show the captured photo
+                            // The inline CSS rules are used to resize the image
+                            //
+                            smallImage.src = "data:image/jpeg;base64," + imageData;
+                        }
+                        
+                        // Called when a photo is successfully retrieved
+                        //
+                        function onPhotoURISuccess(imageURI) {
+                            // Uncomment to view the image file URI
+                            // console.log(imageURI);
+                            
+                            // Get image handle
+                            //
+                            var largeImage = document.getElementById('largeImage');
+                            
+                            // Unhide image elements
+                            //
+                            largeImage.style.display = 'block';
+                            
+                            // Show the captured photo
+                            // The inline CSS rules are used to resize the image
+                            //
+                            largeImage.src = imageURI;
+                        }
+                        
+                        // A button will call this function
+                        //
+                        function capturePhoto() {
+                            // Take picture using device camera and retrieve image as base64-encoded string
+                            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+                                                        destinationType: destinationType.FILE_URI });
+                        }
+                        
+                        // A button will call this function
+                        //
+                        function capturePhotoEdit() {
+                            // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
+                            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 20, allowEdit: true,
+                                                        destinationType: destinationType.FILE_URI });
+                        }
+                        
+                        // A button will call this function
+                        //
+                        function getPhoto(source) {
+                            // Retrieve image file location from specified source
+                            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+                                                        destinationType: destinationType.FILE_URI,
+                                                        sourceType: source });
+                        }
+                        
+                        function uploadPhoto() {
+                            
+                            //selected photo URI is in the src attribute (we set this on getPhoto)
+                            var imageURI = document.getElementById('largeImage').getAttribute("src");
+                            if (!imageURI) {
+                                alert('Please select an image first.');
+                                return;
+                            }
+                            
+                            //set upload options
+                            var options = new FileUploadOptions();
+                            options.fileKey = "file";
+                            options.fileName = imageURI.substr(imageURI.lastIndexOf('/')+1);
+                            options.mimeType = "image/jpeg";
+                            // this will get value of text field
+                            options.params = {
+                                titulo: document.getElementById("titulo").value,
+                                pregunta: document.getElementById("pregunta").value
+                            }
+                            
+                            var ft = new FileTransfer();
+                            ft.upload(imageURI, encodeURI("http://ttg1.pronosticodeltiempo.info/test/mobile.php?check=2"), win, fail, options);
+                            alert('Gracias por tu pregunta intentaremos responderte lo antes posible');
+                        }
+                        
+                        // Called if something bad happens.
+                        //
+                        function onFail(message) {
+                            alert('Failed because: ' + message);
+                        }
+                        
+                        function win(r) {
+                            console.log("Code = " + r.responseCode);
+                            console.log("Response = " + r.response);
+                            console.log("Sent = " + r.bytesSent);
+                        }
+                        
+                        function fail(error) {
+                            alert("An error has occurred: Code = " + error.code);
+                            console.log("upload error source " + error.source);
+                            console.log("upload error target " + error.target);
+                        }
+                        
+                        
+                        // Wait for device API libraries to load
+                        //
+                        document.addEventListener("deviceready",onDeviceReady,false);
+                        
+                        // device APIs are available
+                        //
+                        function onDeviceReady() {
+                            console.log("Empieza la fiesta.");
+                            pictureSource=navigator.camera.PictureSourceType;
+                            destinationType=navigator.camera.DestinationType;
+                        }
+                        
+                        
+                            </script>
+                        </head>
+    <body>
+        <br/><br/>
+        <button onclick="capturePhoto();">Saca una foto</button> <br>
+        <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">O usa una que ya tenías</button><br>
+        <img style="display:none;" id="largeImage" src="" />
+        <input type="text" id="titulo" placeholder='Ejemplo de titular: "Necesito ayuda para cocina" o "Nuestro patio"' name="firstname"><br>
+            <textarea placeholder="Escribe aquí tu consulta" id="pregunta"></textarea><br>
+            <input type="button" id="btnSubmit" value="Preguntar" onclick="uploadPhoto();">
+                
+                <a href="#" onclick="window.open('http://www.espaciodeco.com', '_system');">Visita Espacio Deco</a>
+                
+                <input type="button" id="btnPreguntas" value="Ver preguntas" onclick="setUpDB();">
+                    
+                    
+                    
+                    <script src="js/jquery-1.11.1.min.js"></script>
+                    <script src="js/bootstrap.min.js"></script>
+                    </body>
 </html>
