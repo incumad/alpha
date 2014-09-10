@@ -1,2 +1,2 @@
-/Users/javierperezunanua/servers/alpha/platforms/android/ant-build/AndroidManifest.xml : \
-/Users/javierperezunanua/servers/alpha/platforms/android/AndroidManifest.xml \
+/incumad/alpha/platforms/android/ant-build/AndroidManifest.xml : \
+/incumad/alpha/platforms/android/AndroidManifest.xml \
