@@ -1,10 +1,13 @@
 /incumad/alpha/platforms/android/ant-gen/io/cordova/hellocordova/R.java \
  : /incumad/alpha/platforms/android/res/drawable/icon.png \
+/incumad/alpha/platforms/android/res/drawable/splash.png \
 /incumad/alpha/platforms/android/res/drawable-hdpi/ic_action_next_item.png \
 /incumad/alpha/platforms/android/res/drawable-hdpi/ic_action_previous_item.png \
 /incumad/alpha/platforms/android/res/drawable-hdpi/ic_action_remove.png \
 /incumad/alpha/platforms/android/res/drawable-hdpi/icon.png \
+/incumad/alpha/platforms/android/res/drawable-hdpi/splash.png \
 /incumad/alpha/platforms/android/res/drawable-land-hdpi/screen.png \
+/incumad/alpha/platforms/android/res/drawable-land-hdpi/splash.png \
 /incumad/alpha/platforms/android/res/drawable-land-ldpi/screen.png \
 /incumad/alpha/platforms/android/res/drawable-land-mdpi/screen.png \
 /incumad/alpha/platforms/android/res/drawable-land-xhdpi/screen.png \
@@ -27,11 +30,14 @@
 /incumad/alpha/platforms/android/res/values/strings.xml \
 /incumad/alpha/platforms/android/res/xml/config.xml \
 /incumad/alpha/platforms/android/ant-build/res/drawable/icon.png \
+/incumad/alpha/platforms/android/ant-build/res/drawable/splash.png \
 /incumad/alpha/platforms/android/ant-build/res/drawable-hdpi/ic_action_next_item.png \
 /incumad/alpha/platforms/android/ant-build/res/drawable-hdpi/ic_action_previous_item.png \
 /incumad/alpha/platforms/android/ant-build/res/drawable-hdpi/ic_action_remove.png \
 /incumad/alpha/platforms/android/ant-build/res/drawable-hdpi/icon.png \
+/incumad/alpha/platforms/android/ant-build/res/drawable-hdpi/splash.png \
 /incumad/alpha/platforms/android/ant-build/res/drawable-land-hdpi/screen.png \
+/incumad/alpha/platforms/android/ant-build/res/drawable-land-hdpi/splash.png \
 /incumad/alpha/platforms/android/ant-build/res/drawable-land-ldpi/screen.png \
 /incumad/alpha/platforms/android/ant-build/res/drawable-land-mdpi/screen.png \
 /incumad/alpha/platforms/android/ant-build/res/drawable-land-xhdpi/screen.png \

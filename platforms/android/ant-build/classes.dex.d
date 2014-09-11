@@ -88,4 +88,5 @@
 /incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/mediacapture/Capture$3.class \
 /incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/mediacapture/Capture.class \
 /incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/mediacapture/FileHelper.class \
+/incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/splashscreen/SplashScreen.class \
 /incumad/alpha/platforms/android/ant-build/dexedLibs/classes-e393e21e6cc14cfedbdb20725249ea79.jar \
