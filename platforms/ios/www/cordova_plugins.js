@@ -274,7 +274,7 @@ module.exports.metadata =
     "org.apache.cordova.media": "0.2.12",
     "org.apache.cordova.file-transfer": "0.4.5",
     "org.apache.cordova.inappbrowser": "0.5.1",
-    "org.apache.cordova.splashscreen": "0.3.3-dev",
+    "org.apache.cordova.splashscreen": "0.3.2",
     "org.apache.cordova.file": "1.3.0"
 }
 // BOTTOM OF METADATA
