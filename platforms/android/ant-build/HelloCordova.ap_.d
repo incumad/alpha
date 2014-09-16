@@ -101,11 +101,13 @@
 /incumad/alpha/platforms/android/assets/www/img/trans_black.png \
 /incumad/alpha/platforms/android/assets/www/js/bootstrap.js \
 /incumad/alpha/platforms/android/assets/www/js/bootstrap.min.js \
+/incumad/alpha/platforms/android/assets/www/js/db.js \
 /incumad/alpha/platforms/android/assets/www/js/index.js \
 /incumad/alpha/platforms/android/assets/www/js/index_1.js \
 /incumad/alpha/platforms/android/assets/www/js/jquery-1.11.1.min.js \
 /incumad/alpha/platforms/android/assets/www/js/jquery.slides.min.js \
 /incumad/alpha/platforms/android/assets/www/js/openfb.js \
+/incumad/alpha/platforms/android/assets/www/js/question.js \
 /incumad/alpha/platforms/android/assets/www/plugins/org.apache.cordova.camera \
 /incumad/alpha/platforms/android/assets/www/plugins/org.apache.cordova.file \
 /incumad/alpha/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer \

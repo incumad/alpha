@@ -27,9 +27,9 @@
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
     </feature>
-    <name>HelloCordova</name>
+    <name>Espacio Deco</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Haz tus preguntas y dudas de decoración y te contestaran nuestros decoradores expertos.
     </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
