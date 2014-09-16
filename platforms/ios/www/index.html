@@ -9,35 +9,16 @@
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
   
-        
-        
-        
-
-   
-
     <script>
-    
-    var pictureSource;   // picture source
-    var destinationType; // sets the format of returned value
-
     // Wait for device API libraries to load
     //
     document.addEventListener("deviceready",onDeviceReady,false);
 
     // device APIs are available
-    
+    //
     function onDeviceReady() {
-
-       if (parseFloat(window.device.version) >= 7.0) {
-         $('#home').addClass("ios7");
-         $('#ver-ideas').addClass("ios7");
-         $('#nueva-idea').addClass("ios7");
-       //$('#home').addClass("ios7");
-        }
-
         pictureSource=navigator.camera.PictureSourceType;
         destinationType=navigator.camera.DestinationType;
-
         openFB.init({appId: '834951006536042'});
         var fbToken = localStorage.getItem("userId");
         if (fbToken!==null){
@@ -60,121 +41,9 @@
          $( "#nav_logout" ).click(function() {
             logout();
          });
-         
-        
+         db = window.openDatabase("eddb", "1.0", "Espacio Deco DB", 200000);
+         populateDB();
     }
-
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoDataSuccess(imageData) {
-      // Uncomment to view the base64-encoded image data
-      // console.log(imageData);
-
-      // Get image handle
-      //
-      var smallImage = document.getElementById('smallImage');
-
-      // Unhide image elements
-      //
-      smallImage.style.display = 'block';
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      smallImage.src = "data:image/jpeg;base64," + imageData;
-    }
-
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoURISuccess(imageURI) {
-      // Uncomment to view the image file URI
-      // console.log(imageURI);
-
-      // Get image handle
-      //
-      var largeImage = document.getElementById('largeImage');
-
-      // Unhide image elements
-      //
-      largeImage.style.display = 'block';
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      largeImage.src = imageURI;
-    }
-
-    // A button will call this function
-    //
-    function capturePhoto() {
-      // Take picture using device camera and retrieve image as base64-encoded string
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-        destinationType: destinationType.FILE_URI });
-    }
-
-    // A button will call this function
-    //
-    function capturePhotoEdit() {
-      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 20, allowEdit: true,
-        destinationType: destinationType.FILE_URI });
-    }
-
-    // A button will call this function
-    //
-    function getPhoto(source) {
-      // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-        destinationType: destinationType.FILE_URI,
-        sourceType: source });
-    }
-    
-    function uploadPhoto() {
-
-        //selected photo URI is in the src attribute (we set this on getPhoto)
-        var imageURI = document.getElementById('largeImage').getAttribute("src");
-        if (!imageURI) {
-            alert('Please select an image first.');
-            return;
-        }
-
-        //set upload options
-        var options = new FileUploadOptions();
-        options.fileKey = "file";
-        options.fileName = imageURI.substr(imageURI.lastIndexOf('/')+1);
-        options.mimeType = "image/jpeg";
-        // this will get value of text field
-        options.params = {
-            titulo: document.getElementById("titulo").value,
-            pregunta: document.getElementById("pregunta").value
-        }
-
-        var ft = new FileTransfer();
-        ft.upload(imageURI, encodeURI("http://ttg1.pronosticodeltiempo.info/test/mobile.php?check=2"), win, fail, options);
-        alert('Gracias por tu pregunta intentaremos responderte lo antes posible');
-    }
-
-    // Called if something bad happens.
-    //
-    function onFail(message) {
-      alert('Failed because: ' + message);
-    }
-    
-    function win(r) {
-            console.log("Code = " + r.responseCode);
-            console.log("Response = " + r.response);
-            console.log("Sent = " + r.bytesSent);
-        }
-
-    function fail(error) {
-        alert("An error has occurred: Code = " + error.code);
-        console.log("upload error source " + error.source);
-        console.log("upload error target " + error.target);
-    }
-    
-        
-    
-
     </script>
     <style>
         #demo-page #left-panel.ui-panel {
@@ -277,7 +146,9 @@
             -webkit-transform: translate3d(0,0,0);
         }
     }
- 
+    #home{margin-top:20px;}
+    #nueva-idea{margin-top:20px;}
+    #ver-ideas{margin-top:20px;}
 </style>
     <style>
         body {
@@ -393,16 +264,6 @@
             width: 1170px
         }
     }
-    
-    .ios7
-{
-    padding-top: 20px !important;
-}
-
-    .left-ios7
-{
-    padding-top: 15px !important;
-}
     </style>
   </head>
   <body>
@@ -419,34 +280,55 @@
                   <input  value="facebook" type="button" data-theme="b" onclick="loginFB()"  >
                       <p style="margin-top:20px;"></p>
                       <input name="user" id="user" placeholder="Usuario"  type="text" style="width: 30%;" >
-                      <input type="password" id="passw" name="passw"  placeholder="Password">
-                      <input data-inline="true" value="Iniciar" type="button" data-theme="b" id="enviar" onclick="$.mobile.changePage('#home')">
-                      <input data-inline="true" value="Registro" type="button" data-theme="e" id="registro">
+                          <input type="password" id="passw" name="passw"  placeholder="Password">
+                          <input onclick="$.mobile.changePage('#home');" data-inline="true" value="Iniciar" type="button" data-theme="b" id="enviar">
+                                  <input data-inline="true" value="Registro" type="button" data-theme="e" id="registro">
                          
              </form>
               
           </div>
        
       </div>
-      <div data-url="home" data-role="page" id="home"   >
-          <div data-role="header"  data-theme="c" data-position="fixed" data-fullscreen="true">
-              
-             <div data-role="navbar" data-iconpos="left" id='nav-header' >
-                 <ul>
-                    <li><a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"><img border="0" src="img/logo-espaciodeco.png" alt="Logo, Facebook" style="float:left;display:inline;max-width: 50%;"/></a></li>
-                </ul>
-            </div><!-- /navbar -->
-              <!--h1>Home</h1>
-              <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a-->
+      <div data-url="home" data-role="page" id="home" data-theme="d" >
+          <div data-role="header" data-theme="c" style="top:10px;">
+              <h1>Home</h1>
+              <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a>
           </div><!-- /header -->
          <div data-role="content" style="padding: 3px;" >
+             <!--div class="flexslider">
+                 <ul class="slides">
+                     <li>
+                         <img src="img/contemporary-dining-room.jpg" style="height:auto" />
+                     </li>
+                     <li>
+                         <img src="img/eclectic-living-room.jpg" />
+                     </li>
+                     
+                 </ul>
+             </div-->
+             <!--div class="callbacks_container">
+                 <ul class="rslides" id="slider4">
+                     <li>
+                         <img src="img/contemporary-dining-room.jpg" alt="">
+                       
+                             </li>
+                     <li>
+                         <img src="img/eclectic-living-room.jpg" alt="">
+                        
+                             </li>
+                     <li>
+                         <img src="img/contemporary-dining-room.jpg" alt="">
+                        
+                             </li>
+                 </ul>
+             </div-->
              <div class="container">
                  <div id="slides">
                      <img src="img/livingroom-ChicDeco.jpg" alt="">
                      <img src="img/eclectic-living-room.jpg" alt="">
                      <img src="img/green-streeped-room.jpg" alt="">
                      <img src="img/transitional-kitchen.jpg" alt="">
-                      <img src="img/comedor-verano-junto-a-piscina-summer-dining-room-ft-ChicDeco.jpg" alt="">
+                       <img src="img/comedor-verano-junto-a-piscina-summer-dining-room-ft-ChicDeco.jpg" alt="">
                      
                   </div>
              </div>
@@ -459,35 +341,20 @@
                   <li><a href="#ver-ideas" >ver tus Ideas</a></li>
               </ul>
           </div><!-- /panel -->
-          <div data-role="footer" data-position="fixed" data-theme="c">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#nueva-idea" data-icon="grid">Enviar Idea</a></li>
-                        <li><a href="http://www.espaciodeco.com" data-icon="star">Espacio deco</a></li>
-                        <li><a href="#ver-ideas" data-icon="gear">Mis ideas</a></li>
-                    </ul>
-                </div><!-- /navbar -->
-          </div><!-- /footer -->
     
       </div>
       <div data-url="nueva-idea" data-role="page" id="nueva-idea" data-theme="d">
-          <div data-role="header"  data-theme="c" data-position="fixed" data-fullscreen="true">
-              
-             <div data-role="navbar" data-iconpos="left" id='nav-header' >
-                 <ul>
-                    <li><a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"><img border="0" src="img/logo-espaciodeco.png" alt="Logo, Facebook" style="float:left;display:inline;max-width: 50%;"/></a></li>
-                </ul>
-            </div><!-- /navbar -->
-              <!--h1>Home</h1>
-              <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a-->
+          <div data-role="header" data-theme="c" >
+              <h1>Envia Idea</h1>
+              <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a>
           </div><!-- /header -->
           <div data-role="content">
-              <input  value="Sacar una foto" type="button" data-theme="b" onclick="capturePhoto();"  >
+              <input  value="Saca una foto" type="button" data-theme="b" onclick="capturePhoto();"  >
               <input  value="O usa una que ya tenías" type="button" data-theme="e" onclick="getPhoto(pictureSource.PHOTOLIBRARY);"  >
               <p style="margin-top:20px;"><img style="display:none;" id="largeImage" src="" width="80" height="80" /></p>
               <input name="firstname" id="titulo" placeholder='Ejemplo de titular: "Necesito ayuda para cocina" o "Nuestro patio"'  type="text"  >
-              <textarea cols="40" rows="8" data-mini="true" placeholder="Escribe aquí tu consulta" id="pregunta">Escribe aquí tu consulta</textarea>
-              <input type="button" data-theme="b" id="btnSubmit" value="Preguntar" onclick="uploadPhoto();"  >
+              <textarea cols="40" rows="8" data-mini="true" placeholder="Escribe aquí tu consulta" id="pregunta"></textarea>
+              <input type="button" data-theme="b" id="btnSubmit" value="Manda tu pregunta" onclick="uploadPhoto();"  >
               
           </div><!-- /content -->
           <div data-role="panel" id="left-panel" data-theme="c">
@@ -498,43 +365,16 @@
                   <li><a href="#ver-ideas" >ver tus Ideas</a></li>
               </ul>
           </div><!-- /panel -->
-             <div data-role="footer" data-position="fixed" data-theme="c">
-                <div data-role="navbar" >
-                    <ul>
-                        <li><a href="#nueva-idea" data-icon="grid">Enviar Idea</a></li>
-                        <li><a href="http://www.espaciodeco.com" data-icon="star">Espacio deco</a></li>
-                        <li><a href="#ver-ideas" data-icon="gear">Mis ideas</a></li>
-                    </ul>
-                </div><!-- /navbar -->
-          </div><!-- /footer -->
+          
       </div>
       <div data-url="ver-ideas" data-role="page" id="ver-ideas" data-theme="d" style="padding: 0 0 30px 0;">
-          <div data-role="header"  data-theme="c" data-position="fixed" data-fullscreen="true">
-              
-             <div data-role="navbar" data-iconpos="left" id='nav-header' >
-                 <ul>
-                    <li><a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"><img border="0" src="img/logo-espaciodeco.png" alt="Logo, Facebook" style="float:left;display:inline;max-width: 50%;"/></a></li>
-                </ul>
-            </div><!-- /navbar -->
-              <!--h1>Home</h1>
-              <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a-->
+          <div data-role="header" data-theme="c" >
+              <h1>Ver Ideas</h1>
+              <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Menu</a>
           </div><!-- /header -->
           <div data-role="content">
-              <ul data-role="listview">
-                  <li>
-                      <a href="#">Spatial Unlimited
-                          <img src="img/contemporary-dining-room.jpg" /></a>
-                  </li>
-                  <li>
-                      <a href="#">Google Maps API Examples
-                          <img src="img/contemporary-dining-room.jpg" />
-                      </a>
-                  </li>
-                  <li>
-                      <a href="#">Jquery Mobile Examples
-                          <img src="img/contemporary-dining-room.jpg" />
-                      </a>
-                  </li>
+              <ul id="listQuestions" data-role="listview">
+                  
               </ul>
           </div><!-- /content -->
           
@@ -547,15 +387,6 @@
                   <li data-role="list-divider">ver tus Ideas</li>
               </ul>
           </div><!-- /panel -->
-             <div data-role="footer" data-position="fixed" data-theme="c">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#nueva-idea" data-icon="grid">Enviar Idea</a></li>
-                        <li><a href="http://www.espaciodeco.com" data-icon="star">Espacio deco</a></li>
-                        <li><a href="#ver-ideas" data-icon="gear">Mis ideas</a></li>
-                    </ul>
-                </div><!-- /navbar -->
-          </div><!-- /footer -->
           
       </div>
      <!-- <br/><br/>
@@ -571,20 +402,23 @@
    
     <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
     <script src="js/jquery.slides.min.js"></script>
-    <!-- End SlidesJS Required -->
-    
-    <!-- SlidesJS Required: Initialize SlidesJS with a jQuery doc ready -->
+    <script src="js/db.js"></script>
+    <script src="js/question.js"></script>
     <script>
       
           
           $("#home").on("pageshow",function(){
                         $('#slides').slidesjs({
                                               width: 940,
-                                              height: 1280,
+                                              height: 1220,
                                               navigation: false
                                               });
                         
                         });
+          $("#ver-ideas").on("pageshow",function(){
+                            getQuestionList();
+                    });
+                        
     </script>
 
     
