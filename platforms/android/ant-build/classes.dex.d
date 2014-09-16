@@ -9,6 +9,7 @@
 /incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/camera/CameraLauncher.class \
 /incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/camera/ExifHelper.class \
 /incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/camera/FileHelper.class \
+/incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/device/Device.class \
 /incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/file/ContentFilesystem.class \
 /incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/file/DirectoryManager.class \
 /incumad/alpha/platforms/android/ant-build/classes/org/apache/cordova/file/EncodingException.class \

@@ -120,6 +120,20 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/com.patrickheneise.cordova.statusbar/www/StatusBar.js",
+        "id": "com.patrickheneise.cordova.statusbar.StatusBar",
+        "clobbers": [
+            "navigator.statusbar"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.device/www/device.js",
+        "id": "org.apache.cordova.device.device",
+        "clobbers": [
+            "device"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.file/www/DirectoryEntry.js",
         "id": "org.apache.cordova.file.DirectoryEntry",
         "clobbers": [
@@ -275,6 +289,8 @@ module.exports.metadata =
     "org.apache.cordova.file-transfer": "0.4.5",
     "org.apache.cordova.inappbrowser": "0.5.1",
     "org.apache.cordova.splashscreen": "0.3.2",
+    "com.patrickheneise.cordova.statusbar": "0.0.2",
+    "org.apache.cordova.device": "0.2.11",
     "org.apache.cordova.file": "1.3.0"
 }
 // BOTTOM OF METADATA

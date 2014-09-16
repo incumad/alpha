@@ -27,6 +27,7 @@
 /incumad/alpha/platforms/android/res/drawable-xxhdpi/ic_action_next_item.png \
 /incumad/alpha/platforms/android/res/drawable-xxhdpi/ic_action_previous_item.png \
 /incumad/alpha/platforms/android/res/drawable-xxhdpi/ic_action_remove.png \
+/incumad/alpha/platforms/android/res/drawable-xxhdpi/icon.png \
 /incumad/alpha/platforms/android/res/values/strings.xml \
 /incumad/alpha/platforms/android/res/xml/config.xml \
 /incumad/alpha/platforms/android/ant-build/res/drawable/icon.png \
@@ -57,4 +58,5 @@
 /incumad/alpha/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_next_item.png \
 /incumad/alpha/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_previous_item.png \
 /incumad/alpha/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_remove.png \
+/incumad/alpha/platforms/android/ant-build/res/drawable-xxhdpi/icon.png \
 /incumad/alpha/platforms/android/ant-build/AndroidManifest.xml \
