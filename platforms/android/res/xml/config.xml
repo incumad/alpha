@@ -27,6 +27,9 @@
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
     </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
     <name>Espacio Deco</name>
     <description>
         Haz tus preguntas y dudas de decoración y te contestaran nuestros decoradores expertos.
